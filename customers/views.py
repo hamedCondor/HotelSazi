@@ -51,3 +51,15 @@ def purchaselist(request):
 
 def contactus(request):
     return render(request, 'contactus.html',{})
+
+def updatephone(request,list_id):
+    if request.method == 'POST':
+        todo_item = MyUser.objects.get(pk=list_id)
+        form = MyUserForm(request.POST or None, instance=todo_item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Item has been Edited')
+            return redirect('phonelist')
+    else:
+        item = MyUser.objects.get(pk=list_id)
+        return render(request, 'updatephone.html',{'item' : item})
