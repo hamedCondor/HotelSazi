@@ -1,10 +1,12 @@
-from django.db import models
+
 from django.utils import timezone
+from django.db import models
+import psycopg2
 
 
 # database davatie seminar
 class Seminar(models.Model):
-    seminar_name = models.CharField(maxlenght=200)
+    seminar_name = models.TextField()
     seminar_date = models.DateField()
 
     def __str__(self):
@@ -15,7 +17,7 @@ class Seminar(models.Model):
 
 
 class Sans(models.Model):
-    sans = models.CharField(maxlenght=50)
+    sans = models.TextField()
     seminar = models.ForeignKey(Seminar, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -28,8 +30,8 @@ class Sans(models.Model):
 # class Invited(models.Model):
 #     phone_num = models.
 class Adder(models.Model):
-    first_name = models.CharField(max_lenght=200)
-    last_name = models.CharField(max_lenght=200)
+    first_name = models.TextField()
+    last_name = models.TextField()
     date_of_hired = models.DateField()
     date_of_fired = models.DateField()
     phone_num = models.IntegerField()
@@ -40,8 +42,8 @@ class Adder(models.Model):
 
 
 class Inviter(models.Model):
-    first_name = models.CharField(max_lenght=200)
-    last_name = models.CharField(max_lenght=200)
+    first_name = models.TextField()
+    last_name = models.TextField()
     date_of_hired = models.DateField()
     date_of_fired = models.DateField()
     phone_num = models.IntegerField()
@@ -52,7 +54,7 @@ class Inviter(models.Model):
 
 class Invited(models.Model):
     phone_num = models.IntegerField()
-    full_name = models.CharField(max_lenght=200)
+    full_name = models.TextField()
     added_datetime = models.DateTimeField(default=timezone.now)
     sans = models.ForeignKey(Sans, on_delete=models.CASCADE)
     added_by = models.ForeignKey(Adder, on_delete=models.CASCADE)
@@ -79,15 +81,12 @@ class Code(models.Model):
 
 
 class CodeUsage(models.Model):
-    date = models.CharField(max_lenght=50)
+    date_month = models.TextField()
+    date_year = models.TextField()
     code = models.ForeignKey(Code, on_delete=models.CASCADE)
     inviter = models.ForeignKey(Inviter, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.date
 
-    class Meta:
-        ordering = ['date']
 #
 # class MyUser(models.Model):
 #     user_phone = models.CharField(max_length=11, blank=False)
