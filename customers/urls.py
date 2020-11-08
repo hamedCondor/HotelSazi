@@ -14,6 +14,6 @@ urlpatterns = [
     path('presentlist.html', views.presentlist, name="presentlist"),
     path('purchaselist.html', views.purchaselist, name="purchaselist"),
     path('contactus.html', views.contactus, name="contactus"),
-    path('deletephone/<list_id>', views.deletephone, name='deletephone'),
-    path('updatephone/<list_id>', views.updatephone, name='updatephone'),
+    path('deletephone', views.deletephone, name='deletephone'),
+    # path('updatephone', views.updatephone, name='updatephone'),
 ]
