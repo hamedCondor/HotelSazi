@@ -32,8 +32,8 @@ class Sans(models.Model):
 class Adder(models.Model):
     first_name = models.TextField()
     last_name = models.TextField()
-    date_of_hired = models.DateField()
-    date_of_fired = models.DateField()
+    date_of_hired = models.TextField()
+    date_of_fired = models.TextField()
     phone_num = models.IntegerField()
     level = models.IntegerField()
 
@@ -44,8 +44,8 @@ class Adder(models.Model):
 class Inviter(models.Model):
     first_name = models.TextField()
     last_name = models.TextField()
-    date_of_hired = models.DateField()
-    date_of_fired = models.DateField()
+    date_of_hired = models.TextField()
+    date_of_fired = models.TextField()
     phone_num = models.IntegerField()
 
     def __str__(self):
