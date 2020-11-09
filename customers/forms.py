@@ -1,6 +1,6 @@
 from django import forms
 # from .models import MyUser
-from .models import Adder
+from .models import Adder,Inviter
 from django.db import models
 from django.utils import timezone
 
@@ -15,3 +15,9 @@ class AdderForm(forms.ModelForm):
     class Meta:
         model = Adder
         fields = ["first_name", "last_name", "date_of_hired", "date_of_fired", "phone_num", "level"]
+
+
+class InvitersForm(forms.ModelForm):
+    class Meta:
+        model = Inviter
+        fields = ["first_name", "last_name", "date_of_hired", "date_of_fired", "phone_num"]

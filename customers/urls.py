@@ -15,5 +15,9 @@ urlpatterns = [
     path('contactus.html', views.contactus, name="contactus"),
     path('deletephone', views.deletephone, name='deletephone'),
     # path('updatephone', views.updatephone, name='updatephone'),
-    path('adders', views.adders, name="adders")
+    path('adders', views.adders, name="adders"),
+    path('deletadder/<int:adder_id>', views.deletadder, name="deletadder"),
+    path('inviters', views.inviters, name="inviters"),
+    path('deletinviters/<int:inviters_id>', views.inviters, name="inviters")
+
 ]

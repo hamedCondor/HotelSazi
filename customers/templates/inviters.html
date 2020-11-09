@@ -1,10 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">
+                        <center>نام</center>
+                    </label>
+                    <input type="text" class="form-control" id="first_name" name="first_name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">
+                        <center>نام خانوادگی</center>
+                    </label>
+                    <input type="text" class="form-control" id="last_name" name="last_name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">
+                        <center>شماره موبایل</center>
+                    </label>
+                    <input type="number" class="form-control" id="phone_num" name="phone_num">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">
+                        <center>date_of_hired</center>
+                    </label>
+                    <input type="date" class="form-control" id="level" name="date_of_hired" >
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">
+                        <center>date_of_fired</center>
+                    </label>
+                    <input type="date" class="form-control" id="level" name="date_of_fired" >
+                </div>
+                <button type="submit" class="btn btn-success btn-lg">ثبت</button>
+            </form>
+        </div>
+        <br>
+        {% if adders_list %}
+            <div class="table-responsive">
+                <table class="table table-dark table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            <center>#</center>
+                        </th>
+                        <th scope="col">
+                            <center>نام</center>
+                        </th>
+                        <th scope="col">
+                            <center>نام خانوادگی</center>
+                        </th>
+                        <th scope="col">
+                            <center>تاریخ استخدام</center>
+                        </th>
+                        <th scope="col">
+                            <center>تاریخ اخراج</center>
+                        </th>
+                        <th scope="col">
+                            <center>شماره موبایل</center>
+                        </th>
+                        <th scope="col">
+                            <center>عملیات</center>
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in inviters_list %}
+
+                        <tr scope="row">
+                            <td>
+                                <center>{{ index }}</center>
+                            </td>
+                            <td>
+                                <center>{{ item.first_name }}</center>
+                            </td>
+                            <td>
+                                <center>{{ item.last_name }}</center>
+                            </td>
+                            <td>
+                                <center>{{ item.date_of_hired }}</center>
+                            </td>
+                            <td>
+                                <center>{{ item.date_of_hired }}</center>
+                            </td>
+                            <td>
+                                <center>{{ item.phone_num }}</center>
+                            </td>
+                            <td>
+                                <center>{{ item.level }}</center>
+                            </td>
+                            <td>
+                                <center>
+                                    <a type="button" class="btn btn-danger"
+                                       href="{% url 'deleteinviters' item.id %}">حذف</a>
+{#                                    <a type="button" class="btn btn-secondary" href="{% url 'updatephone' items.id %}">تغییر</a>#}
+                                </center>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <h2>ثبت کننده ای وجود ندارد</h2>
+        {% endif %}
+    </div>
+{% endblock %}
