@@ -18,6 +18,8 @@ urlpatterns = [
     path('adders', views.adders, name="adders"),
     path('deletadder/<int:adder_id>', views.deletadder, name="deletadder"),
     path('inviters', views.inviters, name="inviters"),
-    path('deletinviters/<int:inviters_id>', views.inviters, name="inviters")
-
+    path('deleteinviters/<int:inviter_id>', views.deleteinviters, name="deleteinviters"),
+    path('addguesst', views.addguesst, name="addguesst"),
+    path('addseminardate', views.addseminardate, name="addseminardate"),
+    path('addsans', views.addsans, name='addsans'),
 ]

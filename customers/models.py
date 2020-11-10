@@ -7,7 +7,7 @@ import psycopg2
 # database davatie seminar
 class Seminar(models.Model):
     seminar_name = models.TextField()
-    seminar_date = models.DateField()
+    seminar_date = models.TextField()
 
     def __str__(self):
         return self.seminar_name

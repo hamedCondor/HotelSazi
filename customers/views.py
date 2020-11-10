@@ -3,10 +3,9 @@ from django.shortcuts import render, redirect
 # from .forms import MyUserForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Adder
-from .forms import AdderForm
-from django.utils import timezone
-from django.db import models
+from .models import *
+from .forms import *
+import datetime
 
 
 # Create your views here.
@@ -81,24 +80,59 @@ def adders(request):
         adders_list = Adder.objects.all
         return render(request, 'adders.html', {'adders_list': adders_list})
 
-def deletadder(request,adder_id):
+
+def deletadder(request, adder_id):
     tobe_deleted = Adder.objects.get(pk=adder_id)
     tobe_deleted.delete()
     return redirect('adders')
 
+
 def inviters(request):
     if request.method == 'POST':
-        form = Inviter(request.POST or None)
+        form = InvitersForm(request.POST or None)
         if form.is_valid():
             form.save()
             messages.success(request, '!شماره با موفقیت ثبت شد')
             return HttpResponseRedirect('inviters')
 
     else:
-        inviters_list  = Adder.objects.all
+        inviters_list = Inviter.objects.all
         return render(request, 'inviters.html', {'inviters_list': inviters_list})
 
-def deleteinviters(request,inviter_id):
-    tobe_deleted = Inviter.objects.get(pk=adder_id)
+
+def deleteinviters(request, inviter_id):
+    tobe_deleted = Inviter.objects.get(pk=inviter_id)
     tobe_deleted.delete()
     return redirect('inviters')
+
+
+def addguesst(request):
+    adders_list = Adder.objects.all()
+    inviter_list = Inviter.objects.all()
+    return render(request, 'addguesst.html', {'adders_list': adders_list, 'inviter_list': inviter_list})
+
+
+def addseminardate(request):
+    if request.method == 'POST':
+        form = SeminarForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '!شماره با موفقیت ثبت شد')
+            return HttpResponseRedirect('addseminardate')
+    else:
+        return render(request, 'addseminardate.html', {})
+
+#https://www.code-learner.com/django-class-based-add-delete-update-and-select-example/
+def addsans(request):
+    if request.method == 'POST':
+
+        form = SansForm(request.POST or None)
+        seminars = Seminar.objects.get(pk=form.seminar)
+        form.seminar = seminars.id
+        if form.is_valid():
+            form.save()
+            messages.success(request, '!شماره با موفقیت ثبت شد')
+            return HttpResponseRedirect('addsans')
+    else:
+        seminar_list= Seminar.objects.all()
+        return render(request, 'addsans.html', {'seminar_list' : seminar_list})

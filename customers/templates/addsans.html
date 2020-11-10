@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">
+                    <center>ساعت سانس</center>
+                </label>
+                <input type="text" class="form-control" id="seminar_name" name="seminar_name">
+            </div>
+            <div class="dropdown">
+                <select class="" aria-labelledby="dropdownMenuButton">
+                    {% if seminar_list %}
+                        {% for item in seminar_list %}
+                            <option class="dropdown-item" href="#" name="seminar" value="{{ item.id }}">{{ item.seminar_name }} | {{ item.seminar_date }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">ثبت</button>
+        </form>
+    </div>
+{% endblock %}
