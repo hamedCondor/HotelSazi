@@ -4,17 +4,33 @@
         <form method="post">
             {% csrf_token %}
             <input type="text" name="code">
-            <button type="submit">search</button>
+            <button class="btn btn-warning" type="submit">search</button>
         </form>
 
-    {% if usage %}
-        {% for detail in usage %}
-            <h4>{{ detail.code }}</h4>
-            <h4>{{ detail.year_of_use }}</h4>
-            <h4>{{ detail.inviter }}</h4>
-            <h4>{{ detail.monthof }}</h4>
-            <br><br><br>
-        {% endfor %}
-    {% endif %}
+        {% if usage %}
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">کد</th>
+                    <th scope="col">سال</th>
+                    <th scope="col">ماه</th>
+                    <th scope="col">دعوت کننده</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for detail in usage %}
+                    <tr>
+                        <td>{{ detail.code }}</td>
+                        <td>{{ detail.year_of_use }}</td>
+                        <td>{{ detail.monthof }}</td>
+                        <td>{{ detail.inviter }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        {% else %}
+            <p class="alert alert-secondary">کد مورد نظر شما توسط هیچ دعوت کننده ای گرفته نشده است</p>
+        {% endif %}
     </div>
 {% endblock %}

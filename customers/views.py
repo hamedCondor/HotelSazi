@@ -16,9 +16,11 @@ def daftarcode(request):
     if request.method == 'POST':
         code = request.POST['code']
         get_id = Code.objects.get(code_num=code).id
-        usage = CodeUsage.objects.filter(code = get_id)
-        return render(request, 'daftarcode.html', {'usage': usage})
-    return render(request, 'daftarcode.html', {})
+        if get_id:
+            usage = CodeUsage.objects.filter(code = get_id)
+            return render(request, 'daftarcode.html', {'usage': usage})
+    else:
+        return render(request, 'daftarcode.html', {})
 
 
 # Create your views here.
