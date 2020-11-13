@@ -3,10 +3,22 @@ from django.shortcuts import render, redirect
 # from .forms import MyUserForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Adder
+from .models import Adder, CodeUsage, Code
 from .forms import AdderForm
 from django.utils import timezone
 from django.db import models
+
+
+# tring something new with admin pannel
+
+
+def daftarcode(request):
+    if request.method == 'POST':
+        code = request.POST['code']
+        get_id = Code.objects.get(code_num=code).id
+        usage = CodeUsage.objects.filter(code = get_id)
+        return render(request, 'daftarcode.html', {'usage': usage})
+    return render(request, 'daftarcode.html', {})
 
 
 # Create your views here.
@@ -81,10 +93,12 @@ def adders(request):
         adders_list = Adder.objects.all
         return render(request, 'adders.html', {'adders_list': adders_list})
 
-def deletadder(request,adder_id):
+
+def deletadder(request, adder_id):
     tobe_deleted = Adder.objects.get(pk=adder_id)
     tobe_deleted.delete()
     return redirect('adders')
+
 
 def inviters(request):
     if request.method == 'POST':
@@ -95,10 +109,11 @@ def inviters(request):
             return HttpResponseRedirect('inviters')
 
     else:
-        inviters_list  = Adder.objects.all
+        inviters_list = Adder.objects.all
         return render(request, 'inviters.html', {'inviters_list': inviters_list})
 
-def deleteinviters(request,inviter_id):
+
+def deleteinviters(request, inviter_id):
     tobe_deleted = Inviter.objects.get(pk=adder_id)
     tobe_deleted.delete()
     return redirect('inviters')

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="code">
+            <button type="submit">search</button>
+        </form>
+
+    {% if usage %}
+        {% for detail in usage %}
+            <h4>{{ detail.code }}</h4>
+            <h4>{{ detail.year_of_use }}</h4>
+            <h4>{{ detail.inviter }}</h4>
+            <h4>{{ detail.monthof }}</h4>
+            <br><br><br>
+        {% endfor %}
+    {% endif %}
+    </div>
+{% endblock %}
