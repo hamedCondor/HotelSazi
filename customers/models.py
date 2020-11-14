@@ -1,4 +1,3 @@
-
 from django.utils import timezone
 from django.db import models
 import psycopg2
@@ -6,8 +5,9 @@ import psycopg2
 
 # database davatie seminar
 class Seminar(models.Model):
-    seminar_name = models.TextField()
-    seminar_date = models.TextField()
+    seminar_name = models.CharField(max_length=300)
+    seminar_date = models.DateField()
+    seminar_city = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.seminar_name
@@ -17,7 +17,7 @@ class Seminar(models.Model):
 
 
 class Sans(models.Model):
-    sans = models.TextField()
+    sans = models.CharField(max_length=20)
     seminar = models.ForeignKey(Seminar, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -30,11 +30,11 @@ class Sans(models.Model):
 # class Invited(models.Model):
 #     phone_num = models.
 class Adder(models.Model):
-    first_name = models.TextField()
-    last_name = models.TextField()
-    date_of_hired = models.TextField()
-    date_of_fired = models.TextField()
-    phone_num = models.IntegerField()
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    date_of_hired = models.DateTimeField(default=timezone.now)
+    date_of_fired = models.DateTimeField(null=True, blank=True)
+    phone_num = models.CharField(max_length=11)
     level = models.IntegerField()
 
     def __str__(self):
@@ -42,19 +42,19 @@ class Adder(models.Model):
 
 
 class Inviter(models.Model):
-    first_name = models.TextField()
-    last_name = models.TextField()
-    date_of_hired = models.TextField()
-    date_of_fired = models.TextField()
-    phone_num = models.IntegerField()
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    date_of_hired = models.DateTimeField(default=timezone.now)
+    date_of_fired = models.DateTimeField(null=True, blank=True)
+    phone_num = models.CharField(max_length=11)
 
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
 
 class Invited(models.Model):
-    phone_num = models.IntegerField()
-    full_name = models.TextField()
+    phone_num = models.CharField(max_length=11)
+    full_name = models.CharField(max_length=300)
     added_datetime = models.DateTimeField(default=timezone.now)
     sans = models.ForeignKey(Sans, on_delete=models.CASCADE)
     added_by = models.ForeignKey(Adder, on_delete=models.CASCADE)
@@ -70,7 +70,7 @@ class Invited(models.Model):
 # database daftar code
 
 class Code(models.Model):
-    code_num = models.IntegerField()
+    code_num = models.CharField(max_length=3)
     code_prev_num = models.IntegerField(default='0912')
 
     def __str__(self):
@@ -80,12 +80,25 @@ class Code(models.Model):
         ordering = ['code_num']
 
 
+class MonthOf(models.Model):
+    month_number = models.IntegerField()
+    month_name = models.CharField(default='فروردین', max_length=20)
+
+    def __str__(self):
+        return self.month_name
+
+    class Meta:
+        ordering = ['month_number']
+
+
 class CodeUsage(models.Model):
-    date_month = models.TextField()
-    date_year = models.TextField()
+    year_of_use = models.CharField(max_length=4, default=1399)
     code = models.ForeignKey(Code, on_delete=models.CASCADE)
     inviter = models.ForeignKey(Inviter, on_delete=models.CASCADE)
+    monthof = models.ForeignKey(MonthOf, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.year_of_use
 
 #
 # class MyUser(models.Model):

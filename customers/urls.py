@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
-from django.views.generic import TemplateView
 
 
 urlpatterns = [
@@ -22,4 +21,7 @@ urlpatterns = [
     path('addguesst', views.addguesst, name="addguesst"),
     path('addseminardate', views.addseminardate, name="addseminardate"),
     path('addsans', views.addsans, name='addsans'),
+    path('deletinviters/<int:inviters_id>', views.inviters, name="inviters"),
+    path('daftarcode', views.daftarcode, name="daftarcode"),
+    path('allcode', views.allcode, name="allcode")
 ]

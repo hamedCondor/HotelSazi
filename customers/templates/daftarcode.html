@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h2>کد را وارد کنید</h2>
+        <div class="row">
+
+            <form method="post" class="col-sm-8">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="code">
+                <button class="btn btn-success" type="submit">جست و جو</button>
+            </form>
+            <a class="btn btn-primary col-sm-4" href="{%  url 'allcode' %}">لیست کل</a>
+
+        </div>
+
+        <br>
+        {% if usage %}
+            <table class="table" dir="rtl" align="right">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">
+                        <center>کد</center>
+                    </th>
+                    <th scope="col">
+                        <center>سال</center>
+                    </th>
+                    <th scope="col">
+                        <center>ماه</center>
+                    </th>
+                    <th scope="col">
+                        <center>دعوت کننده</center>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for detail in usage %}
+                    <tr>
+                        <td>
+                            <center>{{ detail.code }}</center>
+                        </td>
+                        <td>
+                            <center>{{ detail.year_of_use }}</center>
+                        </td>
+                        <td>
+                            <center>{{ detail.monthof }}</center>
+                        </td>
+                        <td>
+                            <center>{{ detail.inviter }}</center>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        {% else %}
+            <p class="alert alert-secondary">کد مورد نظر شما توسط هیچ دعوت کننده ای گرفته نشده است</p>
+        {% endif %}
+    </div>
+{% endblock %}

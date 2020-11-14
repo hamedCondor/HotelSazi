@@ -6,7 +6,33 @@ from django.http import HttpResponseRedirect
 from .models import *
 from .forms import *
 import datetime
+from .models import Adder, CodeUsage, Code
+from .forms import AdderForm
+from django.utils import timezone
+from django.db import models
 
+
+# tring something new with admin pannel
+
+
+def daftarcode(request):
+    if request.method == 'POST':
+        code = request.POST['code']
+        try :
+            get_id = Code.objects.get(code_num=code).id
+        except:
+            get_id = None
+        if get_id:
+            usage = CodeUsage.objects.filter(code=get_id)
+            return render(request, 'daftarcode.html', {'usage': usage})
+
+        return render(request, 'daftarcode.html', {})
+    else:
+        return render(request, 'daftarcode.html', {})
+
+def allcode(request):
+    getcodes= CodeUsage.objects.all()
+    return render(request, 'allcode.html', {'getcodes' : getcodes})
 
 # Create your views here.
 
@@ -94,7 +120,6 @@ def inviters(request):
             form.save()
             messages.success(request, '!شماره با موفقیت ثبت شد')
             return HttpResponseRedirect('inviters')
-
     else:
         inviters_list = Inviter.objects.all
         return render(request, 'inviters.html', {'inviters_list': inviters_list})
@@ -122,7 +147,8 @@ def addseminardate(request):
     else:
         return render(request, 'addseminardate.html', {})
 
-#https://www.code-learner.com/django-class-based-add-delete-update-and-select-example/
+
+# https://www.code-learner.com/django-class-based-add-delete-update-and-select-example/
 def addsans(request):
     if request.method == 'POST':
 
@@ -134,5 +160,5 @@ def addsans(request):
             messages.success(request, '!شماره با موفقیت ثبت شد')
             return HttpResponseRedirect('addsans')
     else:
-        seminar_list= Seminar.objects.all()
-        return render(request, 'addsans.html', {'seminar_list' : seminar_list})
+        seminar_list = Seminar.objects.all()
+        return render(request, 'addsans.html', {'seminar_list': seminar_list})

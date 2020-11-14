@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        {% if getcodes %}
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">
+                        <center>کد</center>
+                    </th>
+                    <th scope="col">
+                        <center>سال</center>
+                    </th>
+                    <th scope="col">
+                        <center>ماه</center>
+                    </th>
+                    <th scope="col">
+                        <center>دعوت کننده</center>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for detail in getcodes %}
+                    <tr>
+                        <td>
+                            <center>{{ detail.code }}</center>
+                        </td>
+                        <td>
+                            <center>{{ detail.year_of_use }}</center>
+                        </td>
+                        <td>
+                            <center>{{ detail.monthof }}</center>
+                        </td>
+                        <td>
+                            <center>{{ detail.inviter }}</center>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="alert alert-secondary">کدی یافت نشد</p>
+        {% endif %}
+    </div>
+{% endblock %}
