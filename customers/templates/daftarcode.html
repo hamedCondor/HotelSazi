@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container">
-        <h2>کد را وارد کنید</h2>
+        <h3>کد را وارد کنید</h3>
         <div class="row">
-
-            <form method="post" class="col-sm-8">
-                {% csrf_token %}
-                <input type="text" class="form-control" name="code">
-                <button class="btn btn-success" type="submit">جست و جو</button>
-            </form>
-            <a class="btn btn-primary col-sm-4" href="{%  url 'allcode' %}">لیست کل</a>
-
+            <div class="col-md-8">
+                <form method="post" class="col-sm-8">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" name="code">
+                    <br>
+                    <button class="btn btn-success" type="submit">جست و جو</button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-primary" href="{% url 'allcode' %}">لیست کل</a>
+            </div>
         </div>
 
         <br>
@@ -53,7 +56,7 @@
 
             </table>
         {% else %}
-            <p class="alert alert-secondary">کد مورد نظر شما توسط هیچ دعوت کننده ای گرفته نشده است</p>
+            <p class="alert alert-warning">کد مورد نظر شما توسط هیچ دعوت کننده ای گرفته نشده است</p>
         {% endif %}
     </div>
 {% endblock %}
