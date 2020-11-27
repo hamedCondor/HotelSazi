@@ -1,13 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div class="container">
+    <div class="container ">
+        <div class="btn-toolbar pb-4 justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="button" class="btn btn-secondary">کد 0</button>
+                <button type="button" class="btn btn-secondary">کد 9</button>
+                <button type="button" class="btn btn-secondary">کد 8</button>
+                <button type="button" class="btn btn-secondary">کد 7</button>
+                <button type="button" class="btn btn-secondary">کد 6</button>
+                <button type="button" class="btn btn-secondary">کد 5</button>
+                <button type="button" class="btn btn-secondary">کد 4</button>
+                <button type="button" class="btn btn-secondary">کد 3</button>
+                <button type="button" class="btn btn-secondary">کد 2</button>
+                <button type="button" class="btn btn-secondary">کد 1</button>
+                <button type="button" class="btn btn-outline-primary">کلی</button>
+            </div>
+        </div>
+
         {% if getcodes %}
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">
-                        <center>کد</center>
+                        <center>دعوت کننده</center>
                     </th>
                     <th scope="col">
                         <center>سال</center>
@@ -16,7 +32,7 @@
                         <center>ماه</center>
                     </th>
                     <th scope="col">
-                        <center>دعوت کننده</center>
+                        <center>کد</center>
                     </th>
                 </tr>
                 </thead>
@@ -24,7 +40,7 @@
                 {% for detail in getcodes %}
                     <tr>
                         <td>
-                            <center>{{ detail.code }}</center>
+                            <center>{{ detail.inviter }}</center>
                         </td>
                         <td>
                             <center>{{ detail.year_of_use }}</center>
@@ -33,7 +49,7 @@
                             <center>{{ detail.monthof }}</center>
                         </td>
                         <td>
-                            <center>{{ detail.inviter }}</center>
+                            <center>{{ detail.code }}</center>
                         </td>
                     </tr>
                 {% endfor %}

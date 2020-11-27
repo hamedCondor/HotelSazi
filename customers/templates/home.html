@@ -1,5 +1,49 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
-    <h1>this is home page</h1>
+    {% if object_list %}
+        <table class="table" dir="rtl">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">
+                    <center>اسم</center>
+                </th>
+                <th scope="col">
+                    <center>فامیل</center>
+                </th>
+                <th scope="col">
+                    <center>تاریخ استخدام</center>
+                </th>
+                <th scope="col">
+                    <center>تلفن</center>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for detail in object_list %}
+
+                <tr>
+
+                    <td>
+                        <a href="{% url 'inviter_detail' detail.id %}">
+                            <center>{{ detail.first_name }}</center>
+                        </a>
+                    </td>
+                    <td>
+                        <center>{{ detail.last_name }}</center>
+                    </td>
+                    <td>
+                        <center>{{ detail.date_of_hired }}</center>
+                    </td>
+                    <td>
+                        <center>{{ detail.phone_num }}</center>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="alert alert-secondary">دعوت کننده ای وجود ندارد</p>
+    {% endif %}
+    </div>
 {% endblock %}

@@ -1,27 +1,14 @@
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 from . import views
-
+from .views import AllCodeListView,HomeListView,HomeDetailView
 
 urlpatterns = [
-    path('', views.home, name="home"),
-    path('addphone.html', views.addphone, name="addphone"),
-    path('addpresent.html', views.addpresent, name="addpresent"),
-    path('addpurchase.html', views.addpurchase, name="addpurchase"),
-    path('phonelist.html', views.phonelist, name="phonelist"),
-    path('presentlist.html', views.presentlist, name="presentlist"),
-    path('purchaselist.html', views.purchaselist, name="purchaselist"),
-    path('contactus.html', views.contactus, name="contactus"),
-    path('deletephone', views.deletephone, name='deletephone'),
-    # path('updatephone', views.updatephone, name='updatephone'),
-    path('adders', views.adders, name="adders"),
-    path('deletadder/<int:adder_id>', views.deletadder, name="deletadder"),
-    path('inviters', views.inviters, name="inviters"),
-    path('deleteinviters/<int:inviter_id>', views.deleteinviters, name="deleteinviters"),
-    path('addguesst', views.addguesst, name="addguesst"),
-    path('addseminardate', views.addseminardate, name="addseminardate"),
-    path('addsans', views.addsans, name='addsans'),
-    path('deletinviters/<int:inviters_id>', views.inviters, name="inviters"),
+    path('', login_required(HomeListView.as_view()), name="home"),
+    path('inviter_detail/<int:pk>/', login_required(HomeDetailView.as_view()), name="inviter_detail"),
     path('daftarcode', views.daftarcode, name="daftarcode"),
-    path('allcode', views.allcode, name="allcode")
+    path('allcode', login_required(AllCodeListView.as_view()), name="allcode"),
+
+    # path('code_feeder', views.code_feeder, name="code_feeder"),
 ]
