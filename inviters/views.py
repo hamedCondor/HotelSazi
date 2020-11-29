@@ -8,6 +8,7 @@ from .forms import *
 import datetime
 from django.utils import timezone
 from django.db import models
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
@@ -50,12 +51,13 @@ class AllCodeListView(ListView):
 
 @login_required
 def home(request):
-    return render(request, 'home.html', {})
+    return render(request, 'inviter_list.html', {})
 
 
+############ inviters AUD ##############
 class InviterListView(LoginRequiredMixin, ListView):
     model = Inviter
-    template_name = 'home.html'
+    template_name = 'inviter_list.html'
 
 
 class InviterDetailView(LoginRequiredMixin, DetailView):
@@ -66,7 +68,7 @@ class InviterDetailView(LoginRequiredMixin, DetailView):
 class InviterCreateView(LoginRequiredMixin, CreateView):
     model = Inviter
     template_name = 'inviter_form.html'
-    fields = ['first_name', 'last_name', 'date_of_hired', 'is_fired', 'date_of_fired', 'phone_num', 'company']
+    fields = ['first_name', 'last_name', 'date_of_hired', 'phone_num', 'company']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -96,129 +98,43 @@ class InviterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-#
-# def addphone(request):
-#     # if request.method == 'POST':
-#     #     form = MyUserForm(request.POST or None)
-#     #
-#     #     if form.is_valid():
-#     #         form.save()
-#     #         messages.success(request, '!شماره با موفقیت ثبت شد')
-#     #         return render(request, 'addphone.html', {})
-#     # else:
-#     return render(request, 'addphone.html', {})
-#
-#
-# def deletephone(request, list_id):
-#     # muf = MyUser.objects.get(pk=list_id)
-#     # muf.delete()
-#     return redirect('phonelist')
-#
-#
-# def addpresent(request):
-#     return render(request, 'addpresent.html', {})
-#
-#
-# def addpurchase(request):
-#     return render(request, 'addpurchase.html', {})
-#
-#
-# def phonelist(request):
-#     return render(request, 'phonelist.html', {})
-#
-#
-# def presentlist(request):
-#     return render(request, 'presentlist.html', {})
-#
-#
-# def purchaselist(request):
-#     return render(request, 'purchaselist.html', {})
-#
-#
-# def contactus(request):
-#     return render(request, 'contactus.html', {})
-#
-#
-# # def updatephone(request,list_id):
-# #     if request.method == 'POST':
-# #         todo_item = MyUser.objects.get(pk=list_id)
-# #         form = MyUserForm(request.POST or None, instance=todo_item)
-# #         if form.is_valid():
-# #             form.save()
-# #             messages.success(request, 'Item has been Edited')
-# #             return redirect('phonelist')
-# #     else:
-# #         item = MyUser.objects.get(pk=list_id)
-# #         return render(request, 'updatephone.html',{'item' : item})
-#
-# def adders(request):
-#     if request.method == 'POST':
-#         form = AdderForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, '!شماره با موفقیت ثبت شد')
-#             return HttpResponseRedirect('adders')
-#
-#     else:
-#         adders_list = Adder.objects.all
-#         return render(request, 'adders.html', {'adders_list': adders_list})
-#
-#
-# def deletadder(request, adder_id):
-#     tobe_deleted = Adder.objects.get(pk=adder_id)
-#     tobe_deleted.delete()
-#     return redirect('adders')
-#
-#
-# def inviters(request):
-#     if request.method == 'POST':
-#         form = InvitersForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, '!شماره با موفقیت ثبت شد')
-#             return HttpResponseRedirect('inviters')
-#     else:
-#         inviters_list = Inviter.objects.all
-#         return render(request, 'inviters.html', {'inviters_list': inviters_list})
-#
-#
-# def deleteinviters(request, inviter_id):
-#     tobe_deleted = Inviter.objects.get(pk=inviter_id)
-#     tobe_deleted.delete()
-#     return redirect('inviters')
-#
-#
-# def addguesst(request):
-#     adders_list = Adder.objects.all()
-#     inviter_list = Inviter.objects.all()
-#     return render(request, 'addguesst.html', {'adders_list': adders_list, 'inviter_list': inviter_list})
-#
-#
-# def addseminardate(request):
-#     if request.method == 'POST':
-#         form = SeminarForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, '!شماره با موفقیت ثبت شد')
-#             return HttpResponseRedirect('addseminardate')
-#     else:
-#         return render(request, 'addseminardate.html', {})
-#
-#
-# # https://www.code-learner.com/django-class-based-add-delete-update-and-select-example/
-# def addsans(request):
-#     if request.method == 'POST':
-#
-#         form = SansForm(request.POST or None)
-#         seminars = Seminar.objects.get(pk=form.seminar)
-#         form.seminar = seminars.id
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, '!شماره با موفقیت ثبت شد')
-#             return HttpResponseRedirect('addsans')
-#     else:
-#         seminar_list = Seminar.objects.all()
-#         return render(request, 'addsans.html', {'seminar_list': seminar_list})
+############### Seminar AUD ##############
+
+
+class SeminarListView(LoginRequiredMixin, ListView):
+    model = Seminar
+    template_name = 'seminar_list.html'
+    ordering = ['-year', '-month', '-day']
+    paginate_by = 10
+
+
+class SeminarDetailView(LoginRequiredMixin, DetailView):
+    model = Seminar
+    template_name = 'seminar_detail.html'
+
+
+class SeminarCreateView(LoginRequiredMixin, CreateView):
+    model = Seminar
+    template_name = 'seminar_form.html'
+    fields = ['year', 'month', 'day', 'company', 'is_vebinar']
+
+
+class SeminarUpdateView(LoginRequiredMixin, UpdateView):
+    model = Seminar
+    template_name = 'seminar_form.html'
+    fields = ['year', 'month', 'day', 'company', 'is_vebinar']
+
+
+class SeminarDeleteView(LoginRequiredMixin, DeleteView):
+    model = Seminar
+    template_name = 'seminar_confirm_delete.html'
+    success_url = reverse_lazy('seminar_list')
+
+
+class PenaltyCreateView(LoginRequiredMixin, CreateView):
+    model = Penalty
+    template_name = 'penalty_form.html'
+    fields = ['inviter', 'date', 'amount', 'description']
 
 # ############code feeder
 # def code_feeder(request):
@@ -238,7 +154,7 @@ class InviterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #             'code_prev_num': '0912'
 #         })
 #         feeder.save()
-#     return render(request, 'home.html', {})
+#     return render(request, 'inviter_list.html', {})
 #
 # #########months feeder
 # def months_of(request):
@@ -252,4 +168,4 @@ class InviterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #         })
 #         feeder.save()
 #         months_number += 1
-#     return render(request, 'home.html', {})
+#     return render(request, 'inviter_list.html', {})

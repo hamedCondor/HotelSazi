@@ -5,10 +5,10 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">
-                    <center>اسم</center>
+                    <center>نام</center>
                 </th>
                 <th scope="col">
-                    <center>فامیل</center>
+                    <center>شرکت</center>
                 </th>
                 <th scope="col">
                     <center>تاریخ استخدام</center>
@@ -25,11 +25,11 @@
 
                     <td>
                         <a href="{% url 'inviter_detail' detail.id %}">
-                            <center>{{ detail.first_name }}</center>
+                            <center>{{ detail.first_name }} {{ detail.last_name }}</center>
                         </a>
                     </td>
                     <td>
-                        <center>{{ detail.last_name }}</center>
+                        <center>{{ detail.company }}</center>
                     </td>
                     <td>
                         <center>{{ detail.date_of_hired }}</center>

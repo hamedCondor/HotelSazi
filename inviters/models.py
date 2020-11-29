@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class Company(models.Model):
-    company_name = models.CharField(max_length=400)
+    company_name = models.CharField(max_length=400, unique=True)
 
     def __str__(self):
         return self.company_name
@@ -21,11 +21,12 @@ class Code(models.Model):
 
     class Meta:
         ordering = ['code_num']
+        unique_together = ["code_num", "code_prev_num"]
 
 
 class MonthOf(models.Model):
-    month_number = models.IntegerField()
-    month_name = models.CharField(default='فروردین', max_length=20)
+    month_number = models.IntegerField(unique=True)
+    month_name = models.CharField(default='فروردین', max_length=20, unique=True)
 
     def __str__(self):
         return self.month_name
@@ -39,9 +40,16 @@ class Seminar(models.Model):
     month = models.ForeignKey(MonthOf, on_delete=models.PROTECT)
     day = models.IntegerField(default=15)
     company = models.ForeignKey(Company, on_delete=models.PROTECT)
+    is_vebinar = models.BooleanField(default=False)
 
     def __str__(self):
         return "سمینار %s %s/%s/%s " % (self.company, self.year, self.month, self.day)
+
+    def get_absolute_url(self):
+        return reverse('seminar_list')
+
+    class Meta:
+        unique_together = ['year', 'month', 'day', 'company', 'is_vebinar']
 
 
 class Inviter(models.Model):
@@ -52,7 +60,7 @@ class Inviter(models.Model):
     date_of_start_esurance = models.DateTimeField(null=True, blank=True)
     date_of_end_esurance = models.DateTimeField(null=True, blank=True)
     is_fired = models.BooleanField(default=False)
-    phone_num = models.CharField(max_length=11)
+    phone_num = models.CharField(max_length=11, unique=True)
     company = models.ForeignKey(Company, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
@@ -74,10 +82,34 @@ class CodeUsage(models.Model):
     def __str__(self):
         return self.code
 
+    class Meta:
+        unique_together = ['code', 'year_of_use', 'monthof', 'inviter', 'company']
 
-class Sells(models.Model):
+
+class CardsType(models.Model):
+    card_name = models.CharField(max_length=300)
+    card_price = models.IntegerField()
+
+    def __str__(self):
+        return self.card_name
+
+    class Meta:
+        unique_together = ['card_name', 'card_price']
+
+
+class TahatorSells(models.Model):
     seminar = models.ForeignKey(Seminar, on_delete=models.PROTECT)
     price_of_sell = models.CharField(max_length=30)
+    extra_detail = models.TextField(null=True, blank=True)
+    inviter = models.ForeignKey(Inviter, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.inviter.first_name} {self.inviter.last_name} فروش'
+
+
+class HotelSaziSells(models.Model):
+    seminar = models.ForeignKey(Seminar, on_delete=models.PROTECT)
+    card_type = models.ForeignKey(CardsType, on_delete=models.PROTECT)
     extra_detail = models.TextField(null=True, blank=True)
     inviter = models.ForeignKey(Inviter, on_delete=models.PROTECT)
 
@@ -95,6 +127,9 @@ class HourlyOffTime(models.Model):
     def __str__(self):
         return f'  مرخصی ساعتی :{self.inviter.first_name}  {self.inviter.last_name}  {self.start_time}  تا {self.end_time} '
 
+    class Meta:
+        unique_together = ['inviter', 'date', 'start_time', 'end_time', 'description']
+
 
 class DailyOffTime(models.Model):
     inviter = models.ForeignKey(Inviter, on_delete=models.CASCADE)
@@ -104,6 +139,9 @@ class DailyOffTime(models.Model):
 
     def __str__(self):
         return f'  مرخصی روزانه :{self.inviter.first_name}  {self.inviter.last_name}  {self.start_date}  تا {self.end_date} '
+
+    class Meta:
+        unique_together = ['inviter', 'start_date', 'end_date', 'description']
 
 
 class Penalty(models.Model):

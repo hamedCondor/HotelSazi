@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row" dir="auto">
+        <form method="POST">
+            {% csrf_token %}
+            <FIELDSET class="form-group" style="text-align: center">
+                <legend class="border-bottom mb-4" style="text-align: center">
+                    حذف دعوت کننده
+                </legend>
+                <h3>آیا مطمئن هستید می خواهید سمینار :</h3>
+                <h4>" {{ seminar.company }}
+                    تاریخ {{ seminar.day }}/{{ seminar.month }}/{{ seminar.year }} "</h4><br>
+                <h3>را حذف کنید ؟</h3>
+
+            </FIELDSET>
+            <button class="btn btn-outline-danger" type="submit">بله, حذف شود</button>
+            <a class="btn btn-outline-secondary" href="{% url 'seminar_list'%}">خیر, منصرف شدم</a>
+        </form>
+    </div>
+{% endblock %}
