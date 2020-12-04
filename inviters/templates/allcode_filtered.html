@@ -18,13 +18,10 @@
             </div>
         </div>
 
-        {% if getcodes %}
+        {% if object_list %}
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        <center>شرکت</center>
-                    </th>
                     <th scope="col">
                         <center>دعوت کننده</center>
                     </th>
@@ -37,15 +34,11 @@
                     <th scope="col">
                         <center>کد</center>
                     </th>
-
                 </tr>
                 </thead>
                 <tbody>
-                {% for detail in getcodes %}
+                {% for detail in object_list %}
                     <tr>
-                    <td>
-                            <center>{{ detail.company }}</center>
-                        </td>
                         <td>
                             <center>{{ detail.inviter }}</center>
                         </td>
@@ -58,7 +51,6 @@
                         <td>
                             <center>{{ detail.code }}</center>
                         </td>
-
                     </tr>
                 {% endfor %}
                 </tbody>

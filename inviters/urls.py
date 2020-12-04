@@ -4,6 +4,7 @@ from django.urls import path
 from . import views
 from .views import (
     AllCodeListView,
+    AllCodeFilteredListView,
     ##### inviters views #####
     InviterListView,
     InviterDetailView,
@@ -24,6 +25,8 @@ urlpatterns = [
     ### Daftar code Urls ###
     path('daftarcode', views.daftarcode, name="daftarcode"),
     path('allcode', login_required(AllCodeListView.as_view()), name="allcode"),
+    path('allcode_filtered/<code>', login_required(AllCodeFilteredListView.as_view()), name="allcode_filtered"),
+
     ### Inviters URls ###
     path('', InviterListView.as_view(), name="inviter_list"),
     path('inviter_new/', InviterCreateView.as_view(), name="inviter_new"),

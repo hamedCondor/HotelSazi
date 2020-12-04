@@ -14,7 +14,7 @@ class InvitersForm(forms.ModelForm):
 class CodeForm(forms.ModelForm):
     class Meta:
         model = Code
-        fields = ["code_num", "code_prev_num"]
+        fields = ["code_num", "code_prev_num" , "code_name"]
 
 class MonthForm(forms.ModelForm):
     class Meta:

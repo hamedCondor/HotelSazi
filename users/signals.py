@@ -27,6 +27,6 @@ def delete_old_file(sender, instance, **kwargs):
 
     # comparing the new file with the old one
     file = instance.image
-    if not old_file == file:
+    if not old_file == file and file.name != 'default.jpg':
         if os.path.isfile(old_file.path):
             os.remove(old_file.path)

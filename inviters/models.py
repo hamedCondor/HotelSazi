@@ -15,6 +15,7 @@ class Company(models.Model):
 class Code(models.Model):
     code_num = models.CharField(max_length=3)
     code_prev_num = models.IntegerField(default='0912')
+    code_name = models.CharField(max_length=1)
 
     def __str__(self):
         return '0%s | %s' % (self.code_prev_num, self.code_num)
@@ -80,7 +81,7 @@ class CodeUsage(models.Model):
     company = models.ForeignKey(Company, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.code
+        return 'code'
 
     class Meta:
         unique_together = ['code', 'year_of_use', 'monthof', 'inviter', 'company']

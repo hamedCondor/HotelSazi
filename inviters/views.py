@@ -8,6 +8,7 @@ from .forms import *
 import datetime
 from django.utils import timezone
 from django.db import models
+from .models import CodeUsage
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
@@ -47,6 +48,16 @@ class AllCodeListView(ListView):
     template_name = 'allcode.html'
     context_object_name = 'getcodes'
     ordering = ['code']
+
+
+class AllCodeFilteredListView(ListView):
+    model = CodeUsage
+    template_name = 'allcode_filtered.html'
+    context_object_name = 'getcodes'
+    ordering = ['code']
+
+    def get_queryset(self):
+        return CodeUsage.objects.filter(code__code_name=self.kwargs.get('code'))
 
 
 @login_required
@@ -105,7 +116,7 @@ class SeminarListView(LoginRequiredMixin, ListView):
     model = Seminar
     template_name = 'seminar_list.html'
     ordering = ['-year', '-month', '-day']
-    paginate_by = 10
+    paginate_by = 2
 
 
 class SeminarDetailView(LoginRequiredMixin, DetailView):
@@ -136,6 +147,7 @@ class PenaltyCreateView(LoginRequiredMixin, CreateView):
     template_name = 'penalty_form.html'
     fields = ['inviter', 'date', 'amount', 'description']
 
+
 # ############code feeder
 # def code_feeder(request):
 #     counter = 10
@@ -149,9 +161,11 @@ class PenaltyCreateView(LoginRequiredMixin, CreateView):
 #             my_code_list.append(f'{counter}')
 #             counter += 1
 #     for code in my_code_list:
+#         code_first = code[0]
 #         feeder = CodeForm({
 #             'code_num': code,
-#             'code_prev_num': '0912'
+#             'code_prev_num': '0912',
+#             'code_name': code_first
 #         })
 #         feeder.save()
 #     return render(request, 'inviter_list.html', {})
