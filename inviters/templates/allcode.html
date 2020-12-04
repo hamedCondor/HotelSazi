@@ -4,17 +4,10 @@
     <div class="container ">
         <div class="btn-toolbar pb-4 justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 0 %}">کد 0</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 9 %}">کد 9</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 8 %}">کد 8</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 7 %}">کد 7</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 6 %}">کد 6</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 5 %}">کد 5</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 4 %}">کد 4</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 3 %}">کد 3</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 2 %}">کد 2</a>
-                <a class="btn btn-outline-secondary" href="{% url 'allcode_filtered' 1 %}">کد 1</a>
-                <a class="btn btn-outline-primary" href="{% url 'allcode' %}">کلی</a>
+                {% for i in '0987654321'|make_list %}
+                    <a class="btn btn-info-secondary" href="{% url 'allcode_filtered' i %}">کد {{ i }}</a>
+                {% endfor %}
+                <a class="btn btn-primary" href="{% url 'allcode' %}">کلی</a>
             </div>
         </div>
 
@@ -43,7 +36,7 @@
                 <tbody>
                 {% for detail in getcodes %}
                     <tr>
-                    <td>
+                        <td>
                             <center>{{ detail.company }}</center>
                         </td>
                         <td>
