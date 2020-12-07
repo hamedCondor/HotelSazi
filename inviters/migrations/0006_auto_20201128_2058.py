@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extra_detail', models.TextField(blank=True, null=True)),
                 ('card_type', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.cardstype')),
-                ('inviter', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.inviter')),
+                ('inviters', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.inviters')),
                 ('seminar', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.seminar')),
             ],
         ),

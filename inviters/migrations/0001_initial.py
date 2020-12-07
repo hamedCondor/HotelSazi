@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                 ('price_of_sell', models.CharField(max_length=30)),
                 ('extra_detail', models.TextField(blank=True, null=True)),
                 ('company', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.company')),
-                ('inviter', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.inviter')),
+                ('inviters', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.inviters')),
                 ('monthof', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.monthof')),
             ],
         ),
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 ('date', models.DateField(default=datetime.date.today)),
                 ('amount', models.CharField(max_length=20)),
                 ('description', models.TextField(null=True)),
-                ('inviter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviter')),
+                ('inviters', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviters')),
             ],
         ),
         migrations.CreateModel(
@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
                 ('date', models.DateField(default=datetime.date.today)),
                 ('amount', models.CharField(max_length=20)),
                 ('description', models.TextField(null=True)),
-                ('inviter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviter')),
+                ('inviters', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviters')),
             ],
         ),
         migrations.CreateModel(
@@ -100,7 +100,7 @@ class Migration(migrations.Migration):
                 ('start_time', models.TimeField()),
                 ('end_time', models.TimeField()),
                 ('description', models.TextField(blank=True, null=True)),
-                ('inviter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviter')),
+                ('inviters', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviters')),
             ],
         ),
         migrations.CreateModel(
@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
                 ('start_date', models.DateField(default=datetime.date.today)),
                 ('end_date', models.DateField()),
                 ('description', models.TextField(blank=True, null=True)),
-                ('inviter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviter')),
+                ('inviters', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inviters.inviters')),
             ],
         ),
         migrations.CreateModel(
@@ -119,7 +119,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('year_of_use', models.IntegerField(default=1399, max_length=4)),
                 ('code', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.code')),
-                ('inviter', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.inviter')),
+                ('inviters', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.inviters')),
                 ('monthof', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inviters.monthof')),
             ],
         ),

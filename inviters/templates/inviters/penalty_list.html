@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if object_list %}
+        <h2 class="mb-4">
+            <center>لیست جریمه
+                های {{ object_list.first.inviter.first_name }} {{ object_list.first.inviter.last_name }} </center>
+        </h2>
+        <a class="btn btn-outline-secondary" href="{% url 'inviter_detail' object_list.first.inviter.id %}">بازگشت به
+            صفحه کاربری {{ object_list.first.inviter.first_name }} {{ object_list.first.inviter.last_name }} </a>
+        <table class="table" dir="rtl">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">
+                    <center>کاربر</center>
+                </th>
+                <th scope="col">
+                    <center>تاریخ</center>
+                </th>
+                <th scope="col">
+                    <center>مبلغ جریمه</center>
+                </th>
+                <th scope="col">
+                    <center>جزئیات</center>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for penalty in object_list %}
+
+                <tr>
+                    <td>
+                        <center>{{ penalty.inviter.first_name }} {{ penalty.inviter.last_name }}</center>
+                    </td>
+                    <td>
+                        <center>{{ penalty.date }}</center>
+                    </td>
+                    <td>
+                        <center>{{ penalty.amount }}</center>
+                    </td>
+                    <td>
+                        <center>
+                            <a class="btn btn-outline-secondary" href="{% url 'penalty_detail' penalty.id %}">
+                                جزئیات
+                            </a>
+                            <a class="btn btn-outline-danger" href="{% url 'penalty_delete' penalty.id %}">
+                                حذف
+                            </a>
+                        </center>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="alert alert-secondary">جریمه ای وجود ندارد</p>
+    {% endif %}
+    </div>
+{% endblock %}

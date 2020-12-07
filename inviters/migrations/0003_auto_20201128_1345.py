@@ -30,12 +30,12 @@ class Migration(migrations.Migration):
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='inviter',
+            model_name='inviters',
             name='date_of_end_esurance',
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='inviter',
+            model_name='inviters',
             name='date_of_start_esurance',
             field=models.DateTimeField(blank=True, null=True),
         ),

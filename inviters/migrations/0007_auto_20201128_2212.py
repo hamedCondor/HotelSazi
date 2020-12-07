@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             field=models.CharField(max_length=400, unique=True),
         ),
         migrations.AlterField(
-            model_name='inviter',
+            model_name='inviters',
             name='phone_num',
             field=models.CharField(max_length=11, unique=True),
         ),
@@ -40,15 +40,15 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='codeusage',
-            unique_together={('code', 'year_of_use', 'monthof', 'inviter', 'company')},
+            unique_together={('code', 'year_of_use', 'monthof', 'inviters', 'company')},
         ),
         migrations.AlterUniqueTogether(
             name='dailyofftime',
-            unique_together={('inviter', 'start_date', 'end_date', 'description')},
+            unique_together={('inviters', 'start_date', 'end_date', 'description')},
         ),
         migrations.AlterUniqueTogether(
             name='hourlyofftime',
-            unique_together={('inviter', 'date', 'start_time', 'end_time', 'description')},
+            unique_together={('inviters', 'date', 'start_time', 'end_time', 'description')},
         ),
         migrations.AlterUniqueTogether(
             name='seminar',

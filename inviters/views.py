@@ -62,23 +62,20 @@ class AllCodeFilteredListView(ListView):
 
 @login_required
 def home(request):
-    return render(request, 'inviter_list.html', {})
+    return render(request, 'inviters/inviter_list.html', {})
 
 
-############ inviters AUD ##############
+############ inviters AUD list view classes  ##############
 class InviterListView(LoginRequiredMixin, ListView):
     model = Inviter
-    template_name = 'inviter_list.html'
 
 
 class InviterDetailView(LoginRequiredMixin, DetailView):
     model = Inviter
-    template_name = 'inviter_detail.html'
 
 
 class InviterCreateView(LoginRequiredMixin, CreateView):
     model = Inviter
-    template_name = 'inviter_form.html'
     fields = ['first_name', 'last_name', 'date_of_hired', 'phone_num', 'company']
 
     def form_valid(self, form):
@@ -88,7 +85,6 @@ class InviterCreateView(LoginRequiredMixin, CreateView):
 
 class InviterUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Inviter
-    template_name = 'inviter_form.html'
     fields = ['first_name', 'last_name', 'date_of_hired', 'phone_num', 'company']
 
     def test_func(self):
@@ -100,7 +96,6 @@ class InviterUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class InviterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Inviter
-    template_name = 'inviter_confirm_delete.html'
     success_url = '/'
 
     def test_func(self):
@@ -109,46 +104,69 @@ class InviterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-############### Seminar AUD ##############
+############### Seminar AUD list view classes  ##############
 
 
 class SeminarListView(LoginRequiredMixin, ListView):
     model = Seminar
-    template_name = 'seminar_list.html'
     ordering = ['-year', '-month', '-day']
     paginate_by = 2
 
 
 class SeminarDetailView(LoginRequiredMixin, DetailView):
     model = Seminar
-    template_name = 'seminar_detail.html'
 
 
 class SeminarCreateView(LoginRequiredMixin, CreateView):
     model = Seminar
-    template_name = 'seminar_form.html'
     fields = ['year', 'month', 'day', 'company', 'is_vebinar']
 
 
 class SeminarUpdateView(LoginRequiredMixin, UpdateView):
     model = Seminar
-    template_name = 'seminar_form.html'
     fields = ['year', 'month', 'day', 'company', 'is_vebinar']
 
 
 class SeminarDeleteView(LoginRequiredMixin, DeleteView):
     model = Seminar
-    template_name = 'seminar_confirm_delete.html'
     success_url = reverse_lazy('seminar_list')
+
+
+################# Penalty AUD list view classes #########################
+
+class PenaltyListView(LoginRequiredMixin, ListView):
+    model = Penalty
+    ordering = ['-date']
+    paginate_by = 10
+
+    def get_queryset(self):
+        inviter_id = get_object_or_404(Inviter, id=self.kwargs.get('inviter_id'))
+        return Penalty.objects.filter(inviter=inviter_id).order_by('-date')
+
+
+class PenaltyDetailView(LoginRequiredMixin, DetailView):
+    model = Penalty
 
 
 class PenaltyCreateView(LoginRequiredMixin, CreateView):
     model = Penalty
-    template_name = 'penalty_form.html'
     fields = ['inviter', 'date', 'amount', 'description']
 
+    # def form_valid(self, form):
+    #     form.instance.inviter = self.request.inviter
+    #     return super().form_valid(form)
 
-# ############code feeder
+
+class PenaltyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Penalty
+    fields = ['date', 'amount', 'description']
+
+
+class PenaltyDeleteView(LoginRequiredMixin, DeleteView):
+    model = Penalty
+    success_url = reverse_lazy('/')
+
+# ############ this view force fed db codes with prev number of 0912 and range of nubers from 000 to 999
 # def code_feeder(request):
 #     counter = 10
 #     my_code_list = ["000", "001", "002", "003", "004", "005", "006", "007", "008", "009"]
@@ -170,7 +188,9 @@ class PenaltyCreateView(LoginRequiredMixin, CreateView):
 #         feeder.save()
 #     return render(request, 'inviter_list.html', {})
 #
-# #########months feeder
+
+
+# #########this code force fed db 12 months of year , farvardin = 1 ,,,, esfand = 12
 # def months_of(request):
 #     months_name = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن",
 #                    "اسفند"]

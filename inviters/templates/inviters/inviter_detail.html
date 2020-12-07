@@ -9,7 +9,7 @@
     <div class="row">
         <div class="bd-example col-sm-4">
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-                <button type="button" class="btn btn-outline-warning btn-lg">ثبت جریمه</button>
+                <a href="{% url 'penalty_new' %}" class="btn btn-outline-warning btn-lg">ثبت جریمه</a>
                 <button type="button" class="btn btn-outline-success btn-lg">ثبت پاداش</button>
                 <button type="button" class="btn btn-outline-primary btn-lg">ثبت فروش</button>
                 <button type="button" class="btn btn-outline-secondary btn-lg">ثبت بیمه</button>
@@ -35,8 +35,22 @@
                                     تنها زمانی که هیچ کد و یا فروشی برای کاربر ثبت نشده باشد می توانید کاربر را حذف کنید
                                 </small>
                             </div>
-                            <a class="btn btn-outline-success mt-4" href="{% url 'inviter_delete' object.id %}">مشاهده
-                                جزئیات بیشتر</a>
+                            <button class="btn btn-outline-success mt-4" type="button" data-toggle="collapse"
+                                    data-target="#collapseExample" aria-expanded="false"
+                                    aria-controls="collapseExample">مشاهده جزئیات بیشتر
+                            </button>
+                            <br>
+                            <div class="collapse" id="collapseExample">
+                                <div class="btn-group mt-4" role="group" >
+                                    <a href="{% url 'penalty_list' object.id %}" class="btn btn-outline-warning">جریمه
+                                        ها</a>
+                                    <button type="button" class="btn btn-outline-success ">ثبت پاداش</button>
+                                    <button type="button" class="btn btn-outline-primary ">ثبت فروش</button>
+                                    <button type="button" class="btn btn-outline-secondary ">ثبت بیمه</button>
+                                    <button type="button" class="btn btn-outline-danger ">قطع همکاری</button>
+                                    <button type="button" class="btn btn-outline-secondary ">قطع بیمه</button>
+                                </div>
+                            </div>
                         {% else %}
                             <button type="button" class="btn btn-outline-primary disabled" data-toggle="tooltip"
                                     data-placement="top" title="شما این کاربر را ثبت نکرده اید"
