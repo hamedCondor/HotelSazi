@@ -3,3 +3,4 @@ django-crispy-forms
 psycopg2
 Pillow
 persiantools
+jdatetime

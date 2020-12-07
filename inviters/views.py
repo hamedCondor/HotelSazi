@@ -82,6 +82,7 @@ class InviterCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, 'دعوت کننده اضافه شد')
         return super().form_valid(form)
 
 
@@ -94,6 +95,12 @@ class InviterUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == form.user or self.request.user.is_superuser:
             return True
         return False
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' مشخصات دعوت کننده تغییر یافت')
+        form.save()
+        return redirect('inviter_list')
 
 
 class InviterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -123,10 +130,20 @@ class SeminarCreateView(LoginRequiredMixin, CreateView):
     model = Seminar
     fields = ['year', 'month', 'day', 'company', 'is_vebinar']
 
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, ' سمینار با موفقیت ثبت شد')
+        form.save()
+        return redirect('seminar_list')
+
 
 class SeminarUpdateView(LoginRequiredMixin, UpdateView):
     model = Seminar
     fields = ['year', 'month', 'day', 'company', 'is_vebinar']
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, ' مشخصات سمینار تغییر یافت')
+        form.save()
+        return redirect('seminar_list')
 
 
 class SeminarDeleteView(LoginRequiredMixin, DeleteView):
@@ -151,13 +168,37 @@ class PenaltyDetailView(LoginRequiredMixin, DetailView):
 
 
 class PenaltyCreateView(LoginRequiredMixin, CreateView):
-    model = Penalty
+    model = Reward
     fields = ['inviter', 'date', 'amount', 'description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' جریمه با موفقیت ثبت شد')
+        return form
+
+
+class PenaltyIDCreateView(LoginRequiredMixin, CreateView):
+    model = Penalty
+    fields = ['date', 'amount', 'description']
+
+    def form_valid(self, form):
+        inviter_id = self.kwargs['inviter_id']
+        inviter = Inviter.objects.get(pk=inviter_id)
+        form.instance.inviter = inviter
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' جریمه با موفقیت ثبت شد')
+        return super().form_valid(form)
 
 
 class PenaltyUpdateView(LoginRequiredMixin, UpdateView):
     model = Penalty
     fields = ['date', 'amount', 'description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' جریمه با موفقیت بروزرسانی شد')
+        form.save()
+        return redirect('inviter_list')
 
 
 class PenaltyDeleteView(LoginRequiredMixin, DeleteView):
@@ -165,7 +206,7 @@ class PenaltyDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('inviter_list')
 
 
-################# Penalty AUD list view classes #########################
+################# Reward AUD list view classes #########################
 
 class RewardListView(LoginRequiredMixin, ListView):
     model = Reward
@@ -185,10 +226,34 @@ class RewardCreateView(LoginRequiredMixin, CreateView):
     model = Reward
     fields = ['inviter', 'date', 'amount', 'description']
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' پاداش با موفقیت ثبت شد')
+        return form
+
+
+class RewardIDCreateView(LoginRequiredMixin, CreateView):
+    model = Reward
+    fields = ['date', 'amount', 'description']
+
+    def form_valid(self, form):
+        inviter_id = self.kwargs['inviter_id']
+        inviter = Inviter.objects.get(pk=inviter_id)
+        form.instance.inviter = inviter
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' پاداش با موفقیت ثبت شد')
+        return super().form_valid(form)
+
 
 class RewardUpdateView(LoginRequiredMixin, UpdateView):
     model = Reward
     fields = ['date', 'amount', 'description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' پاداش با موفقیت بروزرسانی شد')
+        form.save()
+        return redirect('inviter_list')
 
 
 class RewardDeleteView(LoginRequiredMixin, DeleteView):
@@ -217,8 +282,8 @@ class RewardDeleteView(LoginRequiredMixin, DeleteView):
 #         feeder.save()
 #     return render(request, 'inviter_list.html', {})
 #
-
-
+#
+#
 # #########this code force fed db 12 months of year , farvardin = 1 ,,,, esfand = 12
 # def months_of(request):
 #     months_name = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن",
@@ -231,4 +296,4 @@ class RewardDeleteView(LoginRequiredMixin, DeleteView):
 #         })
 #         feeder.save()
 #         months_number += 1
-#     return render(request, 'inviter_list.html', {})
+#     return render(request, '/', {})

@@ -23,12 +23,14 @@ from .views import (
     PenaltyCreateView,
     PenaltyUpdateView,
     PenaltyDeleteView,
-####### reward ######
+    PenaltyIDCreateView,
+    ####### reward ######
     RewardListView,
     RewardDetailView,
     RewardCreateView,
     RewardUpdateView,
     RewardDeleteView,
+    RewardIDCreateView,
 )
 
 urlpatterns = [
@@ -50,12 +52,14 @@ urlpatterns = [
     path('seminar_delete/<int:pk>/delete/', SeminarDeleteView.as_view(), name="seminar_delete"),
     ### penalty ###
     path('penalty_form/', PenaltyCreateView.as_view(), name="penalty_new"),
+    path('penalty_form/<int:inviter_id>/', PenaltyIDCreateView.as_view(), name="penalty_new_id"),
     path('penalty_list/<int:inviter_id>/', PenaltyListView.as_view(), name="penalty_list"),
     path('penalty_detail/<int:pk>/', PenaltyDetailView.as_view(), name="penalty_detail"),
     path('penalty_form/<int:pk>/update/', PenaltyUpdateView.as_view(), name="penalty_update"),
     path('penalty_delete/<int:pk>/delete/', PenaltyDeleteView.as_view(), name="penalty_delete"),
     ### reward ###
     path('reward_form/', RewardCreateView.as_view(), name="reward_new"),
+    path('reward_form/<int:inviter_id>/', RewardIDCreateView.as_view(), name="reward_new_id"),
     path('reward_list/<int:inviter_id>/', RewardListView.as_view(), name="reward_list"),
     path('reward_detail/<int:pk>/', RewardDetailView.as_view(), name="reward_detail"),
     path('reward_form/<int:pk>/update/', RewardUpdateView.as_view(), name="reward_update"),

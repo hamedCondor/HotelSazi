@@ -60,6 +60,7 @@ class Inviter(models.Model):
     date_of_fired = models.DateTimeField(null=True, blank=True)
     date_of_start_esurance = models.DateTimeField(null=True, blank=True)
     date_of_end_esurance = models.DateTimeField(null=True, blank=True)
+    is_ensured = models.BooleanField(default=False)
     is_fired = models.BooleanField(default=False)
     phone_num = models.CharField(max_length=11, unique=True)
     company = models.ForeignKey(Company, on_delete=models.PROTECT)
@@ -70,7 +71,6 @@ class Inviter(models.Model):
 
     def get_absolute_url(self):
         return reverse('inviter_new')
-        # return reverse('inviter_detail' , kwargs={'pk' : self.pk})
 
 
 class CodeUsage(models.Model):
@@ -87,22 +87,13 @@ class CodeUsage(models.Model):
         unique_together = ['code', 'year_of_use', 'monthof', 'inviter', 'company']
 
 
-class CardsType(models.Model):
-    card_name = models.CharField(max_length=300)
-    card_price = models.IntegerField()
-
-    def __str__(self):
-        return self.card_name
-
-    class Meta:
-        unique_together = ['card_name', 'card_price']
-
 
 class TahatorSells(models.Model):
     seminar = models.ForeignKey(Seminar, on_delete=models.PROTECT)
     price_of_sell = models.CharField(max_length=30)
     extra_detail = models.TextField(null=True, blank=True)
     inviter = models.ForeignKey(Inviter, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.inviter.first_name} {self.inviter.last_name} فروش'
@@ -110,9 +101,8 @@ class TahatorSells(models.Model):
 
 class HotelSaziSells(models.Model):
     seminar = models.ForeignKey(Seminar, on_delete=models.PROTECT)
-    card_type = models.ForeignKey(CardsType, on_delete=models.PROTECT)
-    extra_detail = models.TextField(null=True, blank=True)
     inviter = models.ForeignKey(Inviter, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.inviter.first_name} {self.inviter.last_name} فروش'
@@ -124,6 +114,7 @@ class HourlyOffTime(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     description = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'  مرخصی ساعتی :{self.inviter.first_name}  {self.inviter.last_name}  {self.start_time}  تا {self.end_time} '
@@ -137,6 +128,7 @@ class DailyOffTime(models.Model):
     start_date = models.DateField(default=datetime.date.today)
     end_date = models.DateField()
     description = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'  مرخصی روزانه :{self.inviter.first_name}  {self.inviter.last_name}  {self.start_date}  تا {self.end_date} '
@@ -150,6 +142,7 @@ class Penalty(models.Model):
     date = models.DateField(default=datetime.date.today)
     amount = models.CharField(max_length=20)
     description = models.TextField(null=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.inviter.first_name} {self.inviter.last_name} جریمه '
@@ -163,6 +156,7 @@ class Reward(models.Model):
     date = models.DateField(default=datetime.date.today)
     amount = models.CharField(max_length=20)
     description = models.TextField(null=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.inviter.first_name} {self.inviter.last_name} پاداش '

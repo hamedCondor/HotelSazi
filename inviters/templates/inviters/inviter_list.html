@@ -1,47 +1,116 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if object_list %}
-        <table class="table" dir="rtl">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">
-                    <center>نام</center>
-                </th>
-                <th scope="col">
-                    <center>شرکت</center>
-                </th>
-                <th scope="col">
-                    <center>تاریخ استخدام</center>
-                </th>
-                <th scope="col">
-                    <center>تلفن</center>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for detail in object_list %}
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <center>
+                            <button class="btn btn-link btn-outline-secondary" style="color: black" data-toggle="collapse" data-target="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                دعوت کننده های شرکت توسعه هتل سازی دریا
+                            </button>
+                        </center>
+                    </h5>
+                </div>
 
-                <tr>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table" dir="rtl">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">
+                                    <center>نام</center>
+                                </th>
+                                <th scope="col">
+                                    <center>تاریخ استخدام</center>
+                                </th>
+                                <th scope="col">
+                                    <center>تلفن</center>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for detail in object_list %}
+                                {% if detail.company.id == 1 %}
+                                    <tr>
 
-                    <td>
-                        <a href="{% url 'inviter_detail' detail.id %}">
-                            <center>{{ detail.first_name }} {{ detail.last_name }}</center>
-                        </a>
-                    </td>
-                    <td>
-                        <center>{{ detail.company }}</center>
-                    </td>
-                    <td>
-                        <center>{{ detail.date_of_hired }}</center>
-                    </td>
-                    <td>
-                        <center>{{ detail.phone_num }}</center>
-                    </td>
+                                        <td>
+                                            <a href="{% url 'inviter_detail' detail.id %}">
+                                                <center>{{ detail.first_name }} {{ detail.last_name }}</center>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <center>{{ detail.date_of_hired }}</center>
+                                        </td>
+                                        <td>
+                                            <center>{{ detail.phone_num }}</center>
+                                        </td>
 
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <center>
+                            <button class="btn btn-link collapsed  btn-outline-secondary" style="color: black" data-toggle="collapse" data-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+
+                                دعوت کننده های شرکت آسان تهاتر ایرانیان
+
+                            </button>
+                        </center>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table" dir="rtl">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">
+                                    <center>نام</center>
+                                </th>
+                                <th scope="col">
+                                    <center>تاریخ استخدام</center>
+                                </th>
+                                <th scope="col">
+                                    <center>تلفن</center>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for detail in object_list %}
+                                {% if detail.company.id == 2 %}
+                                    <tr>
+
+                                        <td>
+                                            <a href="{% url 'inviter_detail' detail.id %}">
+                                                <center>{{ detail.first_name }} {{ detail.last_name }}</center>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <center>{{ detail.date_of_hired }}</center>
+                                        </td>
+                                        <td>
+                                            <center>{{ detail.phone_num }}</center>
+                                        </td>
+
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {% else %}
         <p class="alert alert-secondary">دعوت کننده ای وجود ندارد</p>
     {% endif %}
