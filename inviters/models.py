@@ -157,6 +157,7 @@ class Penalty(models.Model):
     def get_absolute_url(self):
         return reverse('inviter_list')
 
+
 class Reward(models.Model):
     inviter = models.ForeignKey(Inviter, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.date.today)
@@ -165,3 +166,6 @@ class Reward(models.Model):
 
     def __str__(self):
         return f'{self.inviter.first_name} {self.inviter.last_name} پاداش '
+
+    def get_absolute_url(self):
+        return reverse('inviter_list')

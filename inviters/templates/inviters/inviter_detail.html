@@ -10,7 +10,7 @@
         <div class="bd-example col-sm-4">
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                 <a href="{% url 'penalty_new' %}" class="btn btn-outline-warning btn-lg">ثبت جریمه</a>
-                <button type="button" class="btn btn-outline-success btn-lg">ثبت پاداش</button>
+                <a href="{% url 'reward_new' %}" class="btn btn-outline-success btn-lg">ثبت پاداش</a>
                 <button type="button" class="btn btn-outline-primary btn-lg">ثبت فروش</button>
                 <button type="button" class="btn btn-outline-secondary btn-lg">ثبت بیمه</button>
                 <button type="button" class="btn btn-outline-danger btn-lg">قطع همکاری</button>
@@ -44,7 +44,7 @@
                                 <div class="btn-group mt-4" role="group" >
                                     <a href="{% url 'penalty_list' object.id %}" class="btn btn-outline-warning">جریمه
                                         ها</a>
-                                    <button type="button" class="btn btn-outline-success ">ثبت پاداش</button>
+                                    <a href="{% url 'reward_list' object.id %}" class="btn btn-outline-success "> پاداش ها</a>
                                     <button type="button" class="btn btn-outline-primary ">ثبت فروش</button>
                                     <button type="button" class="btn btn-outline-secondary ">ثبت بیمه</button>
                                     <button type="button" class="btn btn-outline-danger ">قطع همکاری</button>

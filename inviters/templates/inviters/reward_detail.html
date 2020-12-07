@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row mb-4" dir="rtl">
+        <h3>
+            پاداش
+            <small class="text-muted"> {{ object.inviter.first_name }} {{ object.inviter.last_name }}
+            </small>
+        </h3>
+    </div>
+    <div dir="rtl" style="float: right">
+        <h4> مبلغ : {{ object.amount }}</h4>
+        <h4> تاریخ : {{ object.date }}</h4>
+        <h4> شرح پاداش :</h4>
+        <p class="text-muted font-size-sm">{{ object.description }}</p>
+        <a class="btn btn-outline-secondary" href="{% url 'reward_list' object.inviter.id %}">
+            بازگشت
+        </a>
+    </div>
+{% endblock %}

@@ -10,6 +10,8 @@ from django.utils import timezone
 from django.db import models
 from .models import CodeUsage
 from django.urls import reverse_lazy
+from persiantools.jdatetime import JalaliDate
+import jdatetime
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
@@ -152,10 +154,6 @@ class PenaltyCreateView(LoginRequiredMixin, CreateView):
     model = Penalty
     fields = ['inviter', 'date', 'amount', 'description']
 
-    # def form_valid(self, form):
-    #     form.instance.inviter = self.request.inviter
-    #     return super().form_valid(form)
-
 
 class PenaltyUpdateView(LoginRequiredMixin, UpdateView):
     model = Penalty
@@ -164,7 +162,38 @@ class PenaltyUpdateView(LoginRequiredMixin, UpdateView):
 
 class PenaltyDeleteView(LoginRequiredMixin, DeleteView):
     model = Penalty
-    success_url = reverse_lazy('/')
+    success_url = reverse_lazy('inviter_list')
+
+
+################# Penalty AUD list view classes #########################
+
+class RewardListView(LoginRequiredMixin, ListView):
+    model = Reward
+    ordering = ['-date']
+    paginate_by = 10
+
+    def get_queryset(self):
+        inviter_id = get_object_or_404(Inviter, id=self.kwargs.get('inviter_id'))
+        return Reward.objects.filter(inviter=inviter_id).order_by('-date')
+
+
+class RewardDetailView(LoginRequiredMixin, DetailView):
+    model = Reward
+
+
+class RewardCreateView(LoginRequiredMixin, CreateView):
+    model = Reward
+    fields = ['inviter', 'date', 'amount', 'description']
+
+
+class RewardUpdateView(LoginRequiredMixin, UpdateView):
+    model = Reward
+    fields = ['date', 'amount', 'description']
+
+
+class RewardDeleteView(LoginRequiredMixin, DeleteView):
+    model = Reward
+    success_url = reverse_lazy('inviter_list')
 
 # ############ this view force fed db codes with prev number of 0912 and range of nubers from 000 to 999
 # def code_feeder(request):

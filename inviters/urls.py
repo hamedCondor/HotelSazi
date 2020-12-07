@@ -23,6 +23,12 @@ from .views import (
     PenaltyCreateView,
     PenaltyUpdateView,
     PenaltyDeleteView,
+####### reward ######
+    RewardListView,
+    RewardDetailView,
+    RewardCreateView,
+    RewardUpdateView,
+    RewardDeleteView,
 )
 
 urlpatterns = [
@@ -48,12 +54,13 @@ urlpatterns = [
     path('penalty_detail/<int:pk>/', PenaltyDetailView.as_view(), name="penalty_detail"),
     path('penalty_form/<int:pk>/update/', PenaltyUpdateView.as_view(), name="penalty_update"),
     path('penalty_delete/<int:pk>/delete/', PenaltyDeleteView.as_view(), name="penalty_delete"),
-
-
-
-
+    ### reward ###
+    path('reward_form/', RewardCreateView.as_view(), name="reward_new"),
+    path('reward_list/<int:inviter_id>/', RewardListView.as_view(), name="reward_list"),
+    path('reward_detail/<int:pk>/', RewardDetailView.as_view(), name="reward_detail"),
+    path('reward_form/<int:pk>/update/', RewardUpdateView.as_view(), name="reward_update"),
+    path('reward_delete/<int:pk>/delete/', RewardDeleteView.as_view(), name="reward_delete"),
 
     # path('code_feeder', views.code_feeder, name="code_feeder"),
     # path('months_of', views.months_of, name="months_of"),
 ]
-
