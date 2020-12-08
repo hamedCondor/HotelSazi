@@ -140,6 +140,9 @@ class DailyOffTime(models.Model):
     class Meta:
         unique_together = ['inviter', 'start_date', 'end_date', 'description']
 
+    def get_absolute_url(self):
+        return reverse('inviter_list')
+
 
 class Penalty(models.Model):
     inviter = models.ForeignKey(Inviter, on_delete=models.CASCADE)

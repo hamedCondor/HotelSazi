@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if object_list %}
+        <h2 class="mb-4">
+            <center>
+                لیست مرخصی های روزانه
+                 {{ object_list.first.inviter.first_name }} {{ object_list.first.inviter.last_name }}
+            </center>
+        </h2>
+        <a class="btn btn-outline-secondary" href="{% url 'inviter_detail' object_list.first.inviter.id %}">بازگشت به
+            صفحه کاربری {{ object_list.first.inviter.first_name }} {{ object_list.first.inviter.last_name }} </a>
+        <table class="table" dir="rtl">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">
+                    <center>کاربر</center>
+                </th>
+                <th scope="col">
+                    <center>تاریخ شروع</center>
+                </th>
+                <th scope="col">
+                    <center>تاریخ پایان</center>
+                </th>
+                <th scope="col">
+                    <center>ثبت کننده</center>
+                </th>
+                <th scope="col">
+                    <center>جزئیات</center>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for offtime in object_list %}
+
+                <tr>
+                    <td>
+                        <center>{{ offtime.inviter.first_name }} {{ offtime.inviter.last_name }}</center>
+                    </td>
+                    <td>
+                        <center>{{ offtime.start_date }}</center>
+                    </td>
+                    <td>
+                        <center>{{ offtime.end_date }}</center>
+                    </td>
+                    <td>
+                        <center>{{ offtime.user }}</center>
+                    </td>
+                    <td>
+                        <center>
+                            <a class="btn btn-outline-secondary" href="{% url 'dailyofftime_detail' offtime.id %}">
+                                جزئیات
+                            </a>
+
+                            <a class="btn btn-outline-primary" href="{% url 'dailyofftime_update' offtime.id %}">
+                                تغییر
+                            </a>
+                            <a class="btn btn-outline-danger" href="{% url 'dailyofftime_delete' offtime.id %}">
+                                حذف
+                            </a>
+                        </center>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="alert alert-secondary">مرخصی روزانه ای وجود ندارد</p>
+    {% endif %}
+    </div>
+{% endblock %}

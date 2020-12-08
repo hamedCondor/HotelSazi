@@ -32,13 +32,20 @@ from .views import (
     RewardUpdateView,
     RewardDeleteView,
     RewardIDCreateView,
-####### reward ######
+####### HourlyOff ######
     HourlyOffTimeListView,
     HourlyOffTimeDetailView,
     HourlyOffTimeCreateView,
     HourlyOffTimeUpdateView,
     HourlyOffTimeDeleteView,
     HourlyOffTimeIDCreateView,
+####### DailyOffTime ######
+    DailyOffTimeListView,
+    DailyOffTimeDetailView,
+    DailyOffTimeCreateView,
+    DailyOffTimeUpdateView,
+    DailyOffTimeDeleteView,
+    DailyOffTimeIDCreateView,
 )
 
 urlpatterns = [
@@ -79,6 +86,14 @@ urlpatterns = [
     path('hourlyofftime_detail/<int:pk>/', HourlyOffTimeDetailView.as_view(), name="hourlyofftime_detail"),
     path('hourlyofftime_form/<int:pk>/update/', HourlyOffTimeUpdateView.as_view(), name="hourlyofftime_update"),
     path('hourlyofftime_delete/<int:pk>/delete/', HourlyOffTimeDeleteView.as_view(), name="hourlyofftime_delete"),
+    ### dailyofftime ###
+    path('dailyofftime_form/', DailyOffTimeCreateView.as_view(), name="dailyofftime_new"),
+    path('dailyofftime_form/<int:inviter_id>/', DailyOffTimeIDCreateView.as_view(), name="dailyofftime_new_id"),
+    path('dailyofftime_list/<int:inviter_id>/', DailyOffTimeListView.as_view(), name="dailyofftime_list"),
+    path('dailyofftime_detail/<int:pk>/', DailyOffTimeDetailView.as_view(), name="dailyofftime_detail"),
+    path('dailyofftime_form/<int:pk>/update/', DailyOffTimeUpdateView.as_view(), name="dailyofftime_update"),
+    path('dailyofftime_delete/<int:pk>/delete/', DailyOffTimeDeleteView.as_view(), name="dailyofftime_delete"),
+
     # path('code_feeder', views.code_feeder, name="code_feeder"),
     # path('months_of', views.months_of, name="months_of"),
 ]

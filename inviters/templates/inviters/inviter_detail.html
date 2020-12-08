@@ -22,7 +22,7 @@
             </div>
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                 <a href="{% url 'hourlyofftime_new_id' object.id %}" class="btn btn-outline-info btn-lg">ثبت مرخصی ساعتی</a>
-                <a href="#" class="btn btn-outline-info btn-lg">ثبت مرخصی روزانه</a>
+                <a href="{% url 'dailyofftime_new_id' object.id %}" class="btn btn-outline-info btn-lg">ثبت مرخصی روزانه</a>
             </div>
         </div>
         <div class="card col-sm-8">
@@ -54,7 +54,8 @@
                                         ها</a>
                                     <a href="{% url 'reward_list' object.id %}" class="btn btn-outline-success "> پاداش
                                         ها</a>
-                                    <a href="{% url 'hourlyofftime_list' object.id %}" class="btn btn-outline-success ">مرخصی ساعتی</a>
+                                    <a href="{% url 'hourlyofftime_list' object.id %}" class="btn btn-outline-info ">مرخصی ساعتی</a>
+                                    <a href="{% url 'dailyofftime_list' object.id %}" class="btn btn-outline-info ">مرخصی روزانه</a>
                                     <button type="button" class="btn btn-outline-secondary ">ثبت بیمه</button>
                                     <button type="button" class="btn btn-outline-danger ">قطع همکاری</button>
                                     <button type="button" class="btn btn-outline-secondary ">قطع بیمه</button>

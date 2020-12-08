@@ -311,7 +311,7 @@ class HourlyOffTimeIDCreateView(LoginRequiredMixin, CreateView):
 
 class HourlyOffTimeUpdateView(LoginRequiredMixin, UpdateView):
     model = HourlyOffTime
-    fields = ['date', 'amount', 'description']
+    fields = ['start_time', 'end_time', 'description']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -321,7 +321,62 @@ class HourlyOffTimeUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class HourlyOffTimeDeleteView(LoginRequiredMixin, DeleteView):
-    model = HourlyOffTime
+    model = DailyOffTime
+    success_url = reverse_lazy('inviter_list')
+
+
+################# DailyOffTime AUD list view classes #########################
+
+class DailyOffTimeListView(LoginRequiredMixin, ListView):
+    model = DailyOffTime
+    ordering = ['-date']
+    paginate_by = 10
+
+    def get_queryset(self):
+        inviter_id = get_object_or_404(Inviter, id=self.kwargs.get('inviter_id'))
+        return DailyOffTime.objects.filter(inviter=inviter_id).order_by('-date')
+
+
+class DailyOffTimeDetailView(LoginRequiredMixin, DetailView):
+    model = DailyOffTime
+
+
+class DailyOffTimeCreateView(LoginRequiredMixin, CreateView):
+    model = DailyOffTime
+    fields = ['inviter', 'start_date', 'end_date', 'description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' مرخصی روزانه با موفقیت ثبت شد')
+        return super().form_valid(form)
+
+
+class DailyOffTimeIDCreateView(LoginRequiredMixin, CreateView):
+    model = DailyOffTime
+    fields = ['start_date', 'end_date', 'description']
+
+    def form_valid(self, form):
+        inviter_id = self.kwargs['inviter_id']
+        inviter = Inviter.objects.get(pk=inviter_id)
+        form.instance.inviter = inviter
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' مرخصی روزانه با موفقیت ثبت شد')
+        return super().form_valid(form)
+
+
+class DailyOffTimeUpdateView(LoginRequiredMixin, UpdateView):
+    model = DailyOffTime
+    fields = ['start_date', 'end_date', 'description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' مرخصی روزانه با موفقیت بروزرسانی شد')
+        form.save()
+        return redirect('inviter_list')
+
+
+class DailyOffTimeDeleteView(LoginRequiredMixin, DeleteView):
+    model = DailyOffTime
     success_url = reverse_lazy('inviter_list')
 
 # ############ this view force fed db codes with prev number of 0912 and range of nubers from 000 to 999
