@@ -329,12 +329,11 @@ class HourlyOffTimeDeleteView(LoginRequiredMixin, DeleteView):
 
 class DailyOffTimeListView(LoginRequiredMixin, ListView):
     model = DailyOffTime
-    ordering = ['-date']
     paginate_by = 10
 
     def get_queryset(self):
         inviter_id = get_object_or_404(Inviter, id=self.kwargs.get('inviter_id'))
-        return DailyOffTime.objects.filter(inviter=inviter_id).order_by('-date')
+        return DailyOffTime.objects.filter(inviter=inviter_id).order_by('-start_date')
 
 
 class DailyOffTimeDetailView(LoginRequiredMixin, DetailView):
