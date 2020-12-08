@@ -5,6 +5,7 @@ from . import views
 from .views import (
     AllCodeListView,
     AllCodeFilteredListView,
+    CodeUsageCreateView,
     ##### inviters views #####
     InviterListView,
     InviterDetailView,
@@ -31,6 +32,13 @@ from .views import (
     RewardUpdateView,
     RewardDeleteView,
     RewardIDCreateView,
+####### reward ######
+    HourlyOffTimeListView,
+    HourlyOffTimeDetailView,
+    HourlyOffTimeCreateView,
+    HourlyOffTimeUpdateView,
+    HourlyOffTimeDeleteView,
+    HourlyOffTimeIDCreateView,
 )
 
 urlpatterns = [
@@ -38,7 +46,7 @@ urlpatterns = [
     path('daftarcode/', views.daftarcode, name="daftarcode"),
     path('allcode/', login_required(AllCodeListView.as_view()), name="allcode"),
     path('allcode_filtered/<code>/', login_required(AllCodeFilteredListView.as_view()), name="allcode_filtered"),
-
+    path('codeusage', login_required(CodeUsageCreateView.as_view()), name='codeusage_new'),
     ### Inviters URls ###
     path('', InviterListView.as_view(), name="inviter_list"),
     path('inviter_new/', InviterCreateView.as_view(), name="inviter_new"),
@@ -64,7 +72,13 @@ urlpatterns = [
     path('reward_detail/<int:pk>/', RewardDetailView.as_view(), name="reward_detail"),
     path('reward_form/<int:pk>/update/', RewardUpdateView.as_view(), name="reward_update"),
     path('reward_delete/<int:pk>/delete/', RewardDeleteView.as_view(), name="reward_delete"),
-
+    ### hourlyofftime ###
+    path('hourlyofftime_form/', HourlyOffTimeCreateView.as_view(), name="hourlyofftime_new"),
+    path('hourlyofftime_form/<int:inviter_id>/', HourlyOffTimeIDCreateView.as_view(), name="hourlyofftime_new_id"),
+    path('hourlyofftime_list/<int:inviter_id>/', HourlyOffTimeListView.as_view(), name="hourlyofftime_list"),
+    path('hourlyofftime_detail/<int:pk>/', HourlyOffTimeDetailView.as_view(), name="hourlyofftime_detail"),
+    path('hourlyofftime_form/<int:pk>/update/', HourlyOffTimeUpdateView.as_view(), name="hourlyofftime_update"),
+    path('hourlyofftime_delete/<int:pk>/delete/', HourlyOffTimeDeleteView.as_view(), name="hourlyofftime_delete"),
     # path('code_feeder', views.code_feeder, name="code_feeder"),
     # path('months_of', views.months_of, name="months_of"),
 ]

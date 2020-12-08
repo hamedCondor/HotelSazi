@@ -86,6 +86,8 @@ class CodeUsage(models.Model):
     class Meta:
         unique_together = ['code', 'year_of_use', 'monthof', 'inviter', 'company']
 
+    def get_absolute_url(self):
+        return reverse('codeusage_new')
 
 
 class TahatorSells(models.Model):
@@ -122,6 +124,8 @@ class HourlyOffTime(models.Model):
     class Meta:
         unique_together = ['inviter', 'date', 'start_time', 'end_time', 'description']
 
+    def get_absolute_url(self):
+        return reverse('inviter_list')
 
 class DailyOffTime(models.Model):
     inviter = models.ForeignKey(Inviter, on_delete=models.CASCADE)

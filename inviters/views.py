@@ -62,6 +62,15 @@ class AllCodeFilteredListView(ListView):
         return CodeUsage.objects.filter(code__code_name=self.kwargs.get('code'))
 
 
+class CodeUsageCreateView(CreateView):
+    model = CodeUsage
+    fields = ['code', 'company', 'year_of_use', 'monthof', 'inviter']
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, 'گیرنده کد اضافه شد')
+        return super().form_valid(form)
+
+
 @login_required
 def home(request):
     return render(request, 'inviters/inviter_list.html', {})
@@ -258,6 +267,61 @@ class RewardUpdateView(LoginRequiredMixin, UpdateView):
 
 class RewardDeleteView(LoginRequiredMixin, DeleteView):
     model = Reward
+    success_url = reverse_lazy('inviter_list')
+
+
+################# HourlyOffTime AUD list view classes #########################
+
+class HourlyOffTimeListView(LoginRequiredMixin, ListView):
+    model = HourlyOffTime
+    ordering = ['-date']
+    paginate_by = 10
+
+    def get_queryset(self):
+        inviter_id = get_object_or_404(Inviter, id=self.kwargs.get('inviter_id'))
+        return HourlyOffTime.objects.filter(inviter=inviter_id).order_by('-date')
+
+
+class HourlyOffTimeDetailView(LoginRequiredMixin, DetailView):
+    model = HourlyOffTime
+
+
+class HourlyOffTimeCreateView(LoginRequiredMixin, CreateView):
+    model = HourlyOffTime
+    fields = ['inviter', 'date', 'start_time', 'end_time', 'description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' مرخصی ساعتی با موفقیت ثبت شد')
+        return super().form_valid(form)
+
+
+class HourlyOffTimeIDCreateView(LoginRequiredMixin, CreateView):
+    model = HourlyOffTime
+    fields = ['date', 'start_time', 'end_time', 'description']
+
+    def form_valid(self, form):
+        inviter_id = self.kwargs['inviter_id']
+        inviter = Inviter.objects.get(pk=inviter_id)
+        form.instance.inviter = inviter
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' مرخصی ساعتی با موفقیت ثبت شد')
+        return super().form_valid(form)
+
+
+class HourlyOffTimeUpdateView(LoginRequiredMixin, UpdateView):
+    model = HourlyOffTime
+    fields = ['date', 'amount', 'description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, ' مرخصی ساعتی با موفقیت بروزرسانی شد')
+        form.save()
+        return redirect('inviter_list')
+
+
+class HourlyOffTimeDeleteView(LoginRequiredMixin, DeleteView):
+    model = HourlyOffTime
     success_url = reverse_lazy('inviter_list')
 
 # ############ this view force fed db codes with prev number of 0912 and range of nubers from 000 to 999

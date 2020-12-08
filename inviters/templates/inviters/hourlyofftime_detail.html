@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row mb-4" dir="rtl">
+        <h3>
+            مرخصی ساعتی
+            <small class="text-muted"> {{ object.inviter.first_name }} {{ object.inviter.last_name }}
+            </small>
+        </h3>
+    </div>
+    <div dir="rtl" style="float: right">
+        <h4> تاریخ : {{ object.date }}</h4>
+        <h4> ساعت شروع : {{ object.start_time }}</h4>
+        <h4> ساعت پایان : {{ object.end_time }}</h4>
+
+        <h4> شرح مرخصی ساعتی :</h4>
+        <p class="text-muted font-size-sm">{{ object.description }}</p>
+        <a class="btn btn-outline-secondary" href="{% url 'hourlyofftime_list' object.inviter.id %}">
+            بازگشت
+        </a>
+    </div>
+{% endblock %}

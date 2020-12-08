@@ -2,8 +2,10 @@
 {% block content %}
     {% if object_list %}
         <h2 class="mb-4">
-            <center>لیست جریمه
-                های {{ object_list.first.inviter.first_name }} {{ object_list.first.inviter.last_name }} </center>
+            <center>
+                لیست مرخصی های روزانه
+                 {{ object_list.first.inviter.first_name }} {{ object_list.first.inviter.last_name }}
+            </center>
         </h2>
         <a class="btn btn-outline-secondary" href="{% url 'inviter_detail' object_list.first.inviter.id %}">بازگشت به
             صفحه کاربری {{ object_list.first.inviter.first_name }} {{ object_list.first.inviter.last_name }} </a>
@@ -17,7 +19,10 @@
                     <center>تاریخ</center>
                 </th>
                 <th scope="col">
-                    <center>مبلغ جریمه</center>
+                    <center>ساعت شروع</center>
+                </th>
+                <th scope="col">
+                    <center>ساعت پایان</center>
                 </th>
                 <th scope="col">
                     <center>ثبت کننده</center>
@@ -28,31 +33,34 @@
             </tr>
             </thead>
             <tbody>
-            {% for penalty in object_list %}
+            {% for offtime in object_list %}
 
                 <tr>
                     <td>
-                        <center>{{ penalty.inviter.first_name }} {{ penalty.inviter.last_name }}</center>
+                        <center>{{ offtime.inviter.first_name }} {{ offtime.inviter.last_name }}</center>
                     </td>
                     <td>
-                        <center>{{ penalty.date }}</center>
+                        <center>{{ offtime.date }}</center>
                     </td>
                     <td>
-                        <center>{{ penalty.amount }}</center>
+                        <center>{{ offtime.start_time }}</center>
                     </td>
                     <td>
-                        <center>{{ penalty.user }}</center>
+                        <center>{{ offtime.end_time }}</center>
+                    </td>
+                    <td>
+                        <center>{{ offtime.user }}</center>
                     </td>
                     <td>
                         <center>
-                            <a class="btn btn-outline-secondary" href="{% url 'penalty_detail' penalty.id %}">
+                            <a class="btn btn-outline-secondary" href="{% url 'hourlyofftime_detail' offtime.id %}">
                                 جزئیات
                             </a>
 
-                            <a class="btn btn-outline-primary" href="{% url 'penalty_update' penalty.id %}">
+                            <a class="btn btn-outline-primary" href="{% url 'hourlyofftime_update' offtime.id %}">
                                 تغییر
                             </a>
-                            <a class="btn btn-outline-danger" href="{% url 'penalty_delete' penalty.id %}">
+                            <a class="btn btn-outline-danger" href="{% url 'hourlyofftime_delete' offtime.id %}">
                                 حذف
                             </a>
                         </center>
@@ -62,7 +70,7 @@
             </tbody>
         </table>
     {% else %}
-        <p class="alert alert-secondary">جریمه ای وجود ندارد</p>
+        <p class="alert alert-secondary">مرخصی ساعتی وجود ندارد</p>
     {% endif %}
     </div>
 {% endblock %}
